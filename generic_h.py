@@ -22,20 +22,20 @@ import os
 import sys
 
 def svnAddText(filename):
-  os.system("svn add " + filename);
-  os.system("svn ps svn:eol-style native " + filename);
+  os.system(f"svn add {filename}");
+  os.system(f"svn ps svn:eol-style native {filename}");
 
 def createHeaderTemplate(filename, name):
   file = open(filename, "wt")
   file.write("\n")
-  file.write("#if !defined(_INCLUDED_" + name.upper() + "_H_)\n")
-  file.write("#define _INCLUDED_" + name.upper() + "_H_\n")
+  file.write(f"#if !defined(_INCLUDED_{name.upper()}" + "_H_)\n")
+  file.write(f"#define _INCLUDED_{name.upper()}" + "_H_\n")
   file.write("\n")
   file.write("#endif\n")
 
 if __name__ == "__main__":
   name = sys.argv[1]
   location = sys.argv[2]
-  filename = os.path.join(location, name + ".h")
+  filename = os.path.join(location, f"{name}.h")
   createHeaderTemplate(filename, name)
   svnAddText(filename)

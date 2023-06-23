@@ -22,19 +22,18 @@ import os
 import sys
 
 def svnAddText(filename):
-  os.system("svn add " + filename);
-  os.system("svn ps svn:eol-style native " + filename);
+  os.system(f"svn add {filename}");
+  os.system(f"svn ps svn:eol-style native {filename}");
 
 def createCPPTemplate(filename, name):
-  file = open(filename, "wt")
-  file.write("\n")
-  file.write("#include \"" + name + ".h\"\n")
-  file.write("\n")
-  file.close()
+  with open(filename, "wt") as file:
+    file.write("\n")
+    file.write("#include \"" + name + ".h\"\n")
+    file.write("\n")
 
 if __name__ == "__main__":
   name = sys.argv[1]
   location = sys.argv[2]
-  filename = os.path.join(location, name + ".cpp")
+  filename = os.path.join(location, f"{name}.cpp")
   createCPPTemplate(filename, name)
   svnAddText(filename)

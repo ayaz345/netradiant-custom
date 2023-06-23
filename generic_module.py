@@ -22,23 +22,22 @@ import os
 import sys
 
 def svnAddText(filename):
-  os.system("svn add " + filename);
-  os.system("svn ps svn:eol-style native " + filename);
+  os.system(f"svn add {filename}");
+  os.system(f"svn ps svn:eol-style native {filename}");
 
 def createHeaderTemplate(filename, name):
   file = open(filename, "wt")
   file.write("\n")
-  file.write("#if !defined(INCLUDED_" + name.upper() + "_H)\n")
-  file.write("#define INCLUDED_" + name.upper() + "_H\n")
+  file.write(f"#if !defined(INCLUDED_{name.upper()}" + "_H)\n")
+  file.write(f"#define INCLUDED_{name.upper()}" + "_H\n")
   file.write("\n")
   file.write("#endif\n")
 
 def createCPPTemplate(filename, name):
-  file = open(filename, "wt")
-  file.write("\n")
-  file.write("#include \"" + name + ".h\"\n")
-  file.write("\n")
-  file.close()
+  with open(filename, "wt") as file:
+    file.write("\n")
+    file.write("#include \"" + name + ".h\"\n")
+    file.write("\n")
 
 if __name__ == "__main__":
   if not len(sys.argv) == 2:
